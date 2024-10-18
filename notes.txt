@@ -247,7 +247,7 @@ Print the  names of employees getting more than 10k salary? --> No aggregation i
 Count the number of employees getting > 10k sal? --> reducer is needed to count(aggregation)
 
 Hadoop Streaming
---------------------------
+----------------
 Utility that comes along with the hadoop distribution which helps in running executable scripts of Python or R
 
 /usr/local/hadoop-2.9.1/share/hadoop/tools/lib
@@ -275,19 +275,90 @@ count --> reducer
 
 select name from emp.sal>10k --> mapper program
 
+Parquet is the default file format of Hadoop
+Parquet --> Columnar compressed file format --> Optimized
 
+OLTP (Online Transaction Processing) --> RDBMS --> Transaction
+OLAP (Online Analytics Processing)--> DWH --> Analytics
 
+Data warehousing like solution Hadoop invented FB
 
+Lot of data
 
+select * from data where people liked>100; 
 
+(100 lines of code --> java)
 
+(50 lines of code --> python)
 
+Lot of data
+Streaming data
+Variety of data
 
+With MR --> Hard to code
+Solution --> They had a lot of inhouse sql developers
 
+HQL--> Hive Query Language (Sql like)
+Thrift servers --> JDBC/ODBC
+HUE --> Web interface provided by cloudera
+Derby/Metastore --> Keeps metadata --> Local database
+CLI --> Hive CLI, Beeline
 
+SQL --> Schema on Write
+Hive --> Schema on read
 
+Internal table/Managed table
+============================
+Whenever a data is loaded from hdfs into hive internal table, data gets moved from hdfs
+Upon the deletion of the table, data is permanently lost
 
+set hive.cli.print.header=true;
+set hive.cli.print.current.db=true
+show databases;
+create database deloitte;
+create database if not exists deloitte;
+use deloitte;
 
+Internal / Managed tables  
+-----------------------------------
+Upon loading a file from HDFS , the file gets physically moved
+from HDFS into the Hive table.
+
+Disadvantages
+--------------------
+If you are deleting the table, file is permanently lost.
+Data is not available for other processes of Hadoop
+
+create table employees(name string, salary float, dept string)
+row format delimited
+fields terminated by ',';
+
+// If the second line is not given (newline is assumed to be row delimiter)
+//third line by default ascii is considered to be the column seperator
+
+describe formatted database deloitte;
+
+load data local inpath 'emp1.txt' into table employees;
+
+describe formatted employees;
+
+load data inpath 'emp2.txt' into table employees;  (The file from hdfs is moved into hive warehouse making it unavailable for other hadoop processes)
+
+drop table employees (Along with table, the emp2 data is also permanently lost)
+
+External tables
+--------------------
+
+Upon loading a file from external table, the file is not moved to the warehouse, it is available for the other processes.
+
+# Create emp2 & emp3 and move it into hdfs to  directory "data"
+
+create external table employee(name string, salary float, dept string)
+row format delimited
+fields terminated by ','
+location '/data'
+
+describe formatted employee
 
 
 

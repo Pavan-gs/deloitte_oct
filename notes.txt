@@ -350,6 +350,7 @@ External tables
 --------------------
 
 Upon loading a file from external table, the file is not moved to the warehouse, it is available for the other processes.
+Table itself is mapped to the location of the file in HDFS
 
 # Create emp2 & emp3 and move it into hdfs to  directory "data"
 
@@ -359,6 +360,281 @@ fields terminated by ','
 location '/data'
 
 describe formatted employee
+
+Internal tables are stored in Metastore/Derby and managed by hive
+External tables are stored outside hive's metastore in HDFS
+
+Partitioning
+============
+create table employee(name string, salary float, dept string)
+partitioned by(state string)
+row format delimited
+fields terminated by ','
+
+load data local inpath 'emp1.csv' into table employees
+partition(state='MH')
+
+load data local inpath 'emp2.csv' into table employees
+partition(state='KA')
+
+load data local inpath 'emp3.csv' into table employees
+partition(state='AP')
+
+select avg(sal) from employees where state="KA"
+
+show partitions emp
+
+inser overwrite directory '/mydata' select * from emp;
+alter table emp drop if exists partition (state="TN")
+
+create external table employee(name string, salary float, dept string)
+partitioned by(state string)
+row format delimited
+fields terminated by ','
+location '/data';
+
+alter table employee
+add partition (state="KA")
+location '/data/KA'
+
+create table emp2 as select * from emp1 where state="KA"
+
+Static and dynamic partitioning
+==========================
+create table master(name string, sal float, dept string)
+row format delimited
+fields terminated by ',';
+
+load data local inpath '/home/hduser/del24/hive/e*.txt' into table emp;
+
+create table static(name string, sal float)
+partitioned by (dept string)
+row format delimited
+fields terminated by ',';
+
+insert into table static partition(dept="HR") select name, sal from master where dept="HR";
+insert into table static partition(dept="FI") select name, sal from master where dept="FI";
+insert into table static partition(dept="Sales") select name, sal from master where dept="Sales";
+
+dynamic partitioning
+=================
+create table dynamic(name string, sal float)
+partitioned by (dept string)
+row format delimited
+fields terminated by ',';
+
+set hive.exec.dynamic.partition.mode=nonstrict
+insert into table static partition(dept) select name, sal,dept from master;
+
+Bucketing
+=========
+create table bucks(name string, sal float)
+partitioned by(dept string)
+clustered by (sal) into 2 buckets
+row format delimited
+fields terminated by ',';
+
+set hive.enforce.bucketing=true
+set hive.enforce.sorting = true
+
+insert into table bucks partition(dept) select name, sal,dept from master
+
+Joins
+=====
+
+Hive deosn't use "using" clause, no cross joins, no natural joins, order of specifying joins matters
+
+
+create table emp (id int, name string, dept string)
+
+insert into table emp values(1,"A","HR")
+
+select e.id, name, dept, s.salary
+    > from emp e
+    > innerjoin salaries s
+    > on e.id = s.id;
+
+
+# Explore customised, udf, mapside joins, reduce side joins
+
+Spark
+=====
+*-------------------------------------------------------------------------------------*
+Spark --> Opensource, Unified, in-memory [RAM] cluster computing framework    
+[written in Scala (functional programming language)] --> 100 times faster than YARN (in-memory) 10 times faster than YARN (in disc)
+
+Unified platform 
+==============
+Complex programming logic (RDD syntax to write programs) using Scala, Python, Java, R
+Dataframes
+spark sql
+spark ml, mllib
+spark streaming 
+graph
+
+Run anywhere
+============
+HDFS, Apache mesos, AWS S3, Azure blob storage
+
+Spark RDD (Resilient Distributed Datasets) --> Logical Split of the data --> They're fault tolerant, distributed, immutable
+
+Lazy evalution
+==============
+Transformations --> The functions or business logic --> Upon applying a transformation
+spark creates a logical plan of execution (Directed Acyclic Graphs [DAG's])
+
+Actions --> Actual execution of the logical plan
+
+Narrow Transformations 
+Wide Transformations 
+
+Shared Variables --> Variables that has to be shared among different RDD's 
+
+Broadcasters
+Accumulators
+
+
+Spark Persistance  --> Save the execution state
+
+Spark SQL dataframes
+
+Spark MLlib --> RDD's (outdated)
+Spark ML --> Spark Dataframes
+
+Spark Streaming
+
+Kafka
+
+Pyspark
+-----------
+RDD syntax  --> Spark Context
+Dataframes --> Spark Session --> Spark context, streaming context, sql context
+Datasets --> Not available for Python/Java
+
+RDD's exposes API's called as Transformations and Actions
+
+Transformations : Takes one RDD as input and produce another RDD as output
+
+1. Row level transformations : Map, Filter, Flatmap, map partition, map partition with index
+
+2. Aggregations : Reduce bykey,aggregate bykey
+
+3. Joins
+
+4. Ranking: groupbykey
+
+Actions : They produce the final output to the driver program
+
+1. Preview --> Take,Sample,top
+
+2. Collect
+
+3. Reduce
+
+4. Saveastext,saveasseq
+
+# Directed Acyclic Graphs : 
+
+# Dag Scheduler : It completes the computation and execution of stages for a job. Tracks the RDD's--> Assign task to task scheduler
+
+# Task scheduler ( Submitting tasks for execution)
+
+# DAG process:
+
+1. User submits an apache spark application
+
+2. The driver module takes the application (Spark context is set-up)
+
+3. Driver identify transformations & Actions required
+
+4. Creates a logical flow of operations (DAG)
+
+5. Dag is converted into Physical execution plan ( Stages )
+
+6. Then the tasks are sent to the cluster with the help of DAG scheduler
+
+
+Coalesce --> Is used to Only REDUCE the number of partitions (It just merges nearby partitions)
+Repartition
+
+
+RDD
+===
+Data structure
+Low-level AP
+Represents the data as a collection of elements
+Transformations are lazy and evaluated on demand (action)
+Supports any data type
+Persistance requires manual caching/persisting
+No Optimization
+Immutable
+Fault tolerant
+Lazy evaluations
+Scala, Java, R, Python
+Unstructured data
+	Disadvantage
+Doesn’t infer schema, optimization of code is manual
+
+
+Dataframes
+==========
+Immutable
+Data structure
+High-level API
+Represents the data as a structured table
+Includes schema and data type information
+Supports various file formats (json, parquet, avro, csv)
+Optimized for query performance (Catalyst optimizer)
+Supports automatic caching and optimization
+Distributed Collection of Row objects
+Optimization --> Catalyst Optimizer (Tungsten)
+Hive compatibility
+Java, Scala, Python, R
+Infer schema, it gives structure of the data
+Compile time safety
+
+Key differences
+===============
+Schema --> DF's have predefined schema, RDD's don't
+Data structure --> DF's are tables, RDD's are collections
+API --> DF's provide highlevel API like select,filter
+Performance --> Optimization in DF's
+Persistance --> Df's automatically does caching
+
+
+1. temporary view --> Session bound, local to spark session, ad-hoc querying
+2. global temporary view --> Session-bound, shared across all the sessions, sharing data between sessions
+3. create or replace temporary view --> Session bound, same as temp views, but it can replace views
+
+
+Parquet file format
+-------------------------
+Compressed columnar file format
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

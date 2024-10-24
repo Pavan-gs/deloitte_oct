@@ -1,0 +1,123 @@
+Data centers
+Virtualization
+Internet access
+CDN
+Resource allocation --> Orchestration --> Kubernetes
+Security & multi-tenancy --> Vnet, access control (security) to provide isolation during multi-tenancy 
+Scalability & automation --> auto scale up and down based on needs
+
+
+Cloud Service Providers
+=======================
+MS Azure, AWS, GCP, Oracle, Bluehost
+
+Infrastructure As A Service (IAAS) --> Servers, Virtual Machines, Virtual network
+
+Software As A Service --> Ready to use software/apps that are hosted on cloud [Gmail,CRM,ERP, Office 365]
+
+Platform As A Service --> Provides a platform to build, test and deploy apps (Azure app service, Google playstore) 
+
+Networking As A Service --> AWS direct connect, AZ networking
+
+ID As A Service --> SOS, Multi factor authentication, (AZ Active Directory[Entra ID], AWS IAM)
+
+Deployment Models
+=================
+Public cloud --> Shared by multiple Organisations 
+Private cloud --> Private to a Organisation/individual
+Hybrid cloud --> Combination of private and public cloud
+Multi-cloud --> Combination of services from different cloud providers (vm-->azure, Storage-->aws, analytics-->gcp)
+Community cloud --> Shared infrastructure with multiple organisations with similar needs
+
+Services
+========
+
+1. Compute Services --> Virtual machines, App service, AKS, Functions
+
+2. Networking --> Vnet, Load balancer, VPN gateway, DNS
+
+3. Storage --> Blob, Files, Disk, Queue & table
+
+4. Database --> SQL, Cosmos, Mysql/postgresql
+
+5. Security --> AAD (Entra ID), Key-vault, Defender
+
+6. AI & Analytics --> ML, Synapse, Cognitive servics, Vision, OpenAI, ADF
+
+7. Devops --> CI/CD pipelines, code repo, agile tools, monitor, application insights
+
+
+Virtual Machines
+================
+
+VM is a virtual computer with hardware/software etc.
+
+Isolation
+Internet communication
+Traffic filtering
+on-premise connectivity
+
+OSI layers
+==========
+Application layer --> Human -- computer interaction
+Presentation layer --> Ensures that the data is in a usable format and is where the data encryption 
+Session layer --> Maintains the connections and is responsible for controlling the ports and sessions 
+Transport --> Transmits the data using tracsaction protocols TCP and UDP
+Network --> Decides which physical path the data follows
+Data link --> Defines the format of data on the network
+Physical --> Transmits the raw bit of the data streams over physical medium
+
+Socket --> IP + Port
+HTTP --> 80
+SSH --> 22
+HTTPs --> 443
+
+Azure bastion --> Used to SSH/connect to yout VM without a public IP address --> Paid service
+
+
+Virtual network
+===============
+
+Azure Vnet
+==========
+
+Acts as a Communication channel between the resources launched in the cloud, it is a representation of your own network in the cloud,
+logical isolation of azure cloud dedicated to your subscription 
+
+Subnet --> A Sub network
+Route tables --> To control the flow of network traffic within a virtual network
+Network Security Group --> Firewall, responsible for filtering incoming, outgoing traffic from/to your VM
+Network Interface Card --> Enable communication between VM's over a network
+
+
+IP Addresses
+============
+
+Internet protocol --> Unique numerical address
+
+Public --> Globally unique, accessible from the internet 
+Private --> Local network, not accessible from internet
+Static IP --> Manually assigned, remains constant
+Dynamic IP --> Automatically assigned, changes periodically
+
+IPV4 (32 bit) --> 4 decimal numbers --> ranging between 0 and 255 (192.168.1.0) --> 2**32
+IPV6 (128 bit) --> 2**128
+
+-,-,-,-
+
+0-255,0-255,0-255,0-255
+
+0.0.0.0 - 255.255.255.255
+
+CIDR --> Classless Inter Domain Routing
+=======================================
+192.168.0.0 to 192.168.0.255 = 256 unique addresses --> 192.168.0.0/24
+192.168.0.0, 192.168.0.1, 192.168.0.2, 192.168.0.3 ..........192.168.0.255 
+
+192.170.0.0/16 --> 192.170.0.0--192.170.255.255 --> 256*256 unique addresses
+192.170.0.1 -- 192.170.0.255
+192.170.1.0--> 192.170.255.255
+
+192.0.0.0/8 --> 256*256*256
+
+

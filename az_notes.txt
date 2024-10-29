@@ -89,7 +89,6 @@ Route tables --> To control the flow of network traffic within a virtual network
 Network Security Group --> Firewall, responsible for filtering incoming, outgoing traffic from/to your VM
 Network Interface Card --> Enable communication between VM's over a network
 
-
 IP Addresses
 ============
 
@@ -120,4 +119,189 @@ CIDR --> Classless Inter Domain Routing
 
 192.0.0.0/8 --> 256*256*256
 
+Lab 1
+=====
+Creating VNet
 
+1. Create a Virtual Network
+2. Let's have two subnets, 1 for Web servers, and another one for DB servers
+3. Create and configure NSG for the VM's under Subnets
+
+Security
+Security Center --> JIT (Just in time)
+Key vault --> Secret, Kry, Certificates management, storing secrets with Hardware Security Model (HSM) 
+Sentinel
+Dedicated Hosts
+
+Network Security Groups --> Firewall, filter inbound & outbound traffic
+Application Security Group --> Grouping of servers with similar ports, functions like web servers
+
+AZ Active Directory[Entra ID] --> Authentication, Single Sign-on, Application management, B2B, B2C, Device management, 
+Multi-factor authentication, DDOS
+
+1. Identity management --> User group and device management
+2. Single Sign On (SSO) --> Access multiple applns  with one set of credentials
+3. Multi-Factor Authentication --> Enhanced Security with additional verification steps
+4. Directory integrations / conditional access
+
+Azure Advanced Threat Protection (ATP) --> Portal for threat protection, identifying if there any compromises to the system
+
+Governance --> Policy, RBAC, Resource locks (Cannot delete, Read only)
+Tags --> Key-value pair
+
+Monitor --> Collect, analyse and act on telemetry data from cloud and on-premise to improve performance
+
+Health Centre --> Analyse, respond, visualise and integrate
+
+Cost Management
+Cost Analysis
+Price Calculator
+Budgets and Alerts
+Advisor
+
+Managed Services
+================
+Storage
+Database
+Data Warehouse
+Integration
+Streaming
+Visualisation
+AI/ML
+
+Storage
+=======
+PAAS
+Managed cloud storage service --> High availability, durable, scalable & redundant storage.
+Service to store files, messages, tables & any other types of information. 
+Also used for VM's which includes disk and files.
+
+1 subscription --> 100 accounts --> 1 account * 500 tb
+
+3 categories
+============
+1. Storage for VM's (disks & files)
+2. Unstructured data (blobs, datalake stores)
+3. Structured data (Tables, SQL db, cosmos db)
+
+Types of AZ storage
+===================
+1. Blobs --> Object storage --> Huge amount of unstructured data such as text, images, videos, data for back-up, archiving, 
+disaster recovery, binary data
+2. Files --> Highly available network file sharing over SMB (Server Message Block) --> Suitable for migration of the data
+3. Tables --> Store structured data (SQL, NOSQL), key-value pair, schema less design
+4. Queues --> Store & Retrieve Messages, each message of maximum size 64 kb --> Store millions of messages
+
+Storage Replication
+====================
+Local Redundancy Storage --> 3 copies of data in 3 storage boxes within same data center
+Geo RS --> 3 copies of data in primary region, 3 copies in secondary region
+Zone RS --> 3 copies of data in multiple data centers within same region
+GZRS --> Same as ZRS, single pysical location in secondary region
+Read only GRS --> Same as GRS, Read only Access in secondary region
+RA-ZRS --> Same as ZRS, Read only Access in secondary region
+
+Performance
+===========
+Standard --> Backed by HDD (magnetic drives), Lowest cost per gb, best for applications that requires bulk storage, 
+infrequent data access
+
+Premium --> Backed by SSD (Solid State drives), offers low latency & consistant performance, use with Azure's VM disks,
+best for data , i/o intensive applications --> DB
+
+General Purpose V1 --> Legacy, doesn't support any performancy tiers, standard and premium, (doesn't support ZRS, GZRS)
+General Purpose V2 --> Performance tiers, all Replications, standard and premium
+Blob storage --> Unstructured data, (append blobs, block blobs)
+
+Performance tiers
+=================
+Hot --> Optimized for storing data that is accessed frequently like VM, files, images, videos that are in regular use 
+storage cost (high), read cost (low)
+
+Cool --> Optimized for storaing data that us infrequently accessed and stored for atleast 30 days like back-up data
+storage cost (low), read cost (higher than hot)
+
+Cold (Archive) --> Optimized for storing data that is rarely accesses and stored for atleast 180 days with flexible latency
+storage cost (least), read cost (highest)
+
+Blob Containers & categories
+============================
+Containers --> Directory structure, can store many blobs under one container
+
+
+types of blob storages
+======================
+Block blobs --> Any text, files, videos, images etc. saved in bob storage are by default saves as block blobs
+Page blobs --> Random access files upto 8 tb --> virtual hard drive --> serves as a disk for VM's
+Append blobs --> Made up of multiple block blobs, optimized for append operations --> ideal for log data analysis in VM
+
+1. Creating storage account
+2. Access the account from Explorer using access keys
+3. Using SAS url fro blob
+4. Generating and using SAS url for Containers
+5. Create alerts for ingress, egress in Monitor
+
+
+Data lake GEN1 
+Data lake GEN2 --> Big Data
+
+ADLS2
+=====
+Combines the best features of Data lake Analytics (Hadoop compatible, Optimized drivers) 
+and Blob storage (Low cost, storage tiers, high availability)
+
+Scalable, secured & managed data lake.
+6 layers of protection for security & compliance
+
+1. Network Security --> Firewalls, Private & Service endpoints
+2. Authentication --> MFA, Service Principal, AAD
+3. Authorisation --> RBAC, ACL's, POSIX
+4. Data encryption --> SSE, CSE,  Key-vault, EKM
+5. Data Access Controls --> Lifecycle management policies, retention policies, data expiration
+6. Monitoring & auditing --> Az monitor, Log analytics
+
+Features		Blob				ADLS Gen2
+========		====				=========
+Top level Organisation	Containers			Containers
+
+Low level Organisation	Virtual directory		Directory
+
+Data containers		Blobs				Files
+
+Soft delete		Yes				No
+
+Static Website		Yes				No
+
+RBAC			Yes				No
+
+Access Control Lists	No				Yes
+
+SAS			Yes				Yes
+
+Access Keys		Yes				Yes
+
+
+ADLS2 is better than Blob storage in performance, security, scalability but costlier than blob storage
+It stores a new version for each file modification. Can be accessed using version history, can do retrieval or deletion.
+
+Azure SQL Database 
+==================
+General purpose RDBMS as a services (DBaaS) based on the Microsoft SQL server db engine.
+
+Benefits
+========
+Convenient, Cost effective, Scalable, Secure, SLA (99.99% uptime)
+
+Microsoft --> hardware, Data centre, Virtualization, patching, OS, networking, Security, auditing, scaling, back-up/recovery
+You --> Design, develop, migrations, capacity planning, performance tuning, automation, optimization  
+
+Deployment models
+=================
+Single DB -- Isolated & portable , contained, own set of resources
+Elastic pool --> Collection of single db's, shared set of resources, cost effective if the usage is unpredictable
+Managed instances --> 100% compatible with latest ms sql server, lift and shift/migration
+
+V-core based purchasing model --> choose the number of vcores, memory, speed, 
+also utilise hybrid (integrate/use your existing sql server licenses) 
+
+DTU based purchasing model --> blend of compute, memory, I/O resources in 3 service tiers

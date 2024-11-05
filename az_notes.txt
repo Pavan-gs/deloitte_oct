@@ -1,307 +1,735 @@
-Data centers
-Virtualization
-Internet access
-CDN
-Resource allocation --> Orchestration --> Kubernetes
-Security & multi-tenancy --> Vnet, access control (security) to provide isolation during multi-tenancy 
-Scalability & automation --> auto scale up and down based on needs
+IAAS --> Virtual network / virtual machines
 
+PAAS --> Cloud services (Playstore)
 
-Cloud Service Providers
-=======================
-MS Azure, AWS, GCP, Oracle, Bluehost
+SAAS --> Applications hosted on cloud (Google mail, CRM, ERP)
 
-Infrastructure As A Service (IAAS) --> Servers, Virtual Machines, Virtual network
+IDAAS --> SOS, Multi factor authentication (Az active directory/entra id, AWS IAM)
 
-Software As A Service --> Ready to use software/apps that are hosted on cloud [Gmail,CRM,ERP, Office 365]
+NAAS --> AWS direct connect, AZ networking
 
-Platform As A Service --> Provides a platform to build, test and deploy apps (Azure app service, Google playstore) 
-
-Networking As A Service --> AWS direct connect, AZ networking
-
-ID As A Service --> SOS, Multi factor authentication, (AZ Active Directory[Entra ID], AWS IAM)
-
-Deployment Models
+Deployment models
 =================
-Public cloud --> Shared by multiple Organisations 
-Private cloud --> Private to a Organisation/individual
-Hybrid cloud --> Combination of private and public cloud
-Multi-cloud --> Combination of services from different cloud providers (vm-->azure, Storage-->aws, analytics-->gcp)
-Community cloud --> Shared infrastructure with multiple organisations with similar needs
+Public --> Shared by multiple organisations
+Private --> Private to a organisation/individual
+Hybrid --> Combination of private and public
+Multi-cloud--> Combination of services from different providers
+Community --> Shared across a community
 
-Services
+Az services
+=========
+Compute services
+===============
+Virtual machines
+Service fabric
+Batch
+Scheduler
+
+Networking services
+=================
+Virtual networks
+Traffic manager
+Express route
+
+Identity and access management
+===========================
+Active directory/ms entra connect
+Key vault
+Multi-factor authentication
+
+Media and CDN
+=============
+CDN
+Media services
+
+Web and mobile services
+=====================
+Function apps
+Web apps
+API apps & management
+
+Analytics
 ========
+HD insights
+ML
+Streaming --> IOt hub, Event hub
+Data factory
+Synapse
 
-1. Compute Services --> Virtual machines, App service, AKS, Functions
+Storage and back up
+=================
+Az blob storage
+Datlake gen 1
+Files
+back up
+site recovery
 
-2. Networking --> Vnet, Load balancer, VPN gateway, DNS
+database
+========
+sql
+Cosmos
+redis
 
-3. Storage --> Blob, Files, Disk, Queue & table
-
-4. Database --> SQL, Cosmos, Mysql/postgresql
-
-5. Security --> AAD (Entra ID), Key-vault, Defender
-
-6. AI & Analytics --> ML, Synapse, Cognitive servics, Vision, OpenAI, ADF
-
-7. Devops --> CI/CD pipelines, code repo, agile tools, monitor, application insights
-
-
-Virtual Machines
+Integration services
 ================
+Service bus
+Biztalk
+Storage queues
+Event grid
+Logic apps
 
+Management
+===========
+Key-vault
+Portal
+Automation
+
+Commerce
+=========
+VM deployment
+Store/market place
+
+Developer services
+================
+Visual studio
+App insights
+
+Serverless computing
+==================
+Azure functions
+Logic apps
+Event grid
+
+ML
+===
+Az ML studio
+
+Virtual machines
+==============
 VM is a virtual computer with hardware/software etc.
 
 Isolation
 Internet communication
 Traffic filtering
-on-premise connectivity
+On-premise connectivity
 
 OSI layers
-==========
-Application layer --> Human -- computer interaction
-Presentation layer --> Ensures that the data is in a usable format and is where the data encryption 
-Session layer --> Maintains the connections and is responsible for controlling the ports and sessions 
-Transport --> Transmits the data using tracsaction protocols TCP and UDP
-Network --> Decides which physical path the data follows
-Data link --> Defines the format of data on the network
-Physical --> Transmits the raw bit of the data streams over physical medium
+========
+
+Application layer --> Human - computer interaction layer where applications can access the network service
+
+Presentation layer --> Ensures that the data is in a usable format and is where the data encryption happens
+
+Session layer --> Maintains the connections and is responsible for controlling ports and sessions
+
+Transport layer --> Transmits data using transaction protocols including TCP and UDP
+
+Network layer --> Decides which physical path the data will follow
+
+Data link layer --> Defines the format of data on the network
+
+Physical layer --> Transmits the raw bit of data streams over the physical medium
 
 Socket --> IP + Port
-HTTP --> 80
+HTTP--> 80
 SSH --> 22
-HTTPs --> 443
+HTTPS --> 443
 
-Azure bastion --> Used to SSH/connect to yout VM without a public IP address --> Paid service
+Azure bastion --> Used to SSH/connect to your VM if you don't have a public IP assigned to the VM
 
-
-Virtual network
-===============
+Virtual Network
+=============
+Act as a communication channel between resources launched in the cloud.
 
 Azure Vnet
+=========
+Representation of your/organisation's own network in the cloud, logical isolation of azure cloud dedicated to your subscription
+
+Subnet --> Subnetwork
+Route table
+Network Security Groups --> Firewalls, responsible for filtering incoming, outgoingtraffic from your VM's
+Network Interface Card
+
+IP addresses   --> Internet protocol --> Unique numerical address
 ==========
-
-Acts as a Communication channel between the resources launched in the cloud, it is a representation of your own network in the cloud,
-logical isolation of azure cloud dedicated to your subscription 
-
-Subnet --> A Sub network
-Route tables --> To control the flow of network traffic within a virtual network
-Network Security Group --> Firewall, responsible for filtering incoming, outgoing traffic from/to your VM
-Network Interface Card --> Enable communication between VM's over a network
-
-IP Addresses
-============
-
-Internet protocol --> Unique numerical address
-
-Public --> Globally unique, accessible from the internet 
-Private --> Local network, not accessible from internet
+Public --> Globally unique, accessible from the internet
+Private --> Local network, not accessible from the internet
 Static IP --> Manually assigned, remains constant
 Dynamic IP --> Automatically assigned, changes periodically
 
-IPV4 (32 bit) --> 4 decimal numbers --> ranging between 0 and 255 (192.168.1.0) --> 2**32
-IPV6 (128 bit) --> 2**128
+IPV4 (32 bit)
+IPV6 (128 bit)
 
--,-,-,-
+_,_,_,_
 
 0-255,0-255,0-255,0-255
 
-0.0.0.0 - 255.255.255.255
+0.0.0.0 to 255.255.255.255
+
+192.168.0.0 to 192.168.0.255 = 256
+192.168.0.1
+192.168.0.2
+192.168.0.3
+.
+.
+.
+.
+.
+192.168.0.255
 
 CIDR --> Classless Inter Domain Routing
-=======================================
-192.168.0.0 to 192.168.0.255 = 256 unique addresses --> 192.168.0.0/24
-192.168.0.0, 192.168.0.1, 192.168.0.2, 192.168.0.3 ..........192.168.0.255 
-
-192.170.0.0/16 --> 192.170.0.0--192.170.255.255 --> 256*256 unique addresses
-192.170.0.1 -- 192.170.0.255
-192.170.1.0--> 192.170.255.255
-
+================================
+192.168.170.0  - 192.168.170.255 --> 256 unique addresses --> 192.168.170.0/24
+192.172.0.0  - 192.172.255.255 --> 192.172.0.0/16 --> 256*256
 192.0.0.0/8 --> 256*256*256
 
-Lab 1
-=====
-Creating VNet
+Preferred IP series for intranet (private IP)
 
-1. Create a Virtual Network
-2. Let's have two subnets, 1 for Web servers, and another one for DB servers
-3. Create and configure NSG for the VM's under Subnets
+small network --> 192.168.1.x --> 2**8
+Large network --> 172.16.x.x --> 2**16
+
 
 Security
-Security Center --> JIT (Just in time)
-Key vault --> Secret, Kry, Certificates management, storing secrets with Hardware Security Model (HSM) 
-Sentinel
-Dedicated Hosts
+========
+Network Security Groups --> Firewalls, responsible for filtering incoming, outgoing traffic from your VM's
+Application security groups --> Provide for the grouping of servers with similar ports filtering requirements, group together servers with similar functions like webservers
 
-Network Security Groups --> Firewall, filter inbound & outbound traffic
-Application Security Group --> Grouping of servers with similar ports, functions like web servers
+Azure Active directory --> entra id
+===================================
+Authentication
+Single sign On [sso]
+Application management
+b2b
+b2c
+Device management
+multi-factor authentication
+ddos
 
-AZ Active Directory[Entra ID] --> Authentication, Single Sign-on, Application management, B2B, B2C, Device management, 
-Multi-factor authentication, DDOS
 
-1. Identity management --> User group and device management
-2. Single Sign On (SSO) --> Access multiple applns  with one set of credentials
-3. Multi-Factor Authentication --> Enhanced Security with additional verification steps
-4. Directory integrations / conditional access
+1. Identity management --> user group and device management
+2. single sign on --> Access multiple applications with one set of credentials
+3. Multi-factor authentication --> Enhanced security with additional verification steps
+4. Directory integrations/conditional access
 
-Azure Advanced Threat Protection (ATP) --> Portal for threat protection, identifying if there any compromises to the system
+1. Key-vault service --> Secret management, key management, certificate management, storing secretes with a hardware security model (HSM's) 
 
-Governance --> Policy, RBAC, Resource locks (Cannot delete, Read only)
-Tags --> Key-value pair
 
-Monitor --> Collect, analyse and act on telemetry data from cloud and on-premise to improve performance
+Azure Advanced Threat protection (ATP)
+Azure information protection
 
-Health Centre --> Analyse, respond, visualise and integrate
+Governance
+==========
+Az policy
+Policy inititives --> Definitions, Assignments
+RBAC
+Resource locks --> cannot delete, read only
+Blueprints
 
-Cost Management
-Cost Analysis
-Price Calculator
-Budgets and Alerts
+Tags
+====
+Key-value pair
+
+Azure monitor
+=============
+Collect, analyse and act on telemetry data from cloud and on-premise to improve performance
+
+Azure health centre
+===================
+Analyse, respond, visualise and integrate
+
+Subscription
+=============
+Dev
+Testing
+Production
+
+Cost management
+===============
+Resource types
+Services
+Location
+
+Tools
+=====
+Calculator
 Advisor
+Hub
+Cost analysis
+cost alerts
 
-Managed Services
-================
-Storage
-Database
-Data Warehouse
-Integration
-Streaming
-Visualisation
-AI/ML
-
-Storage
-=======
+Azure storage
+=============
 PAAS
-Managed cloud storage service --> High availability, durable, scalable & redundant storage.
-Service to store files, messages, tables & any other types of information. 
-Also used for VM's which includes disk and files.
+Managed cloud storage service --> high availability, durable, scalable and redundant storage
+
+Files, messages, tables and other types of information
 
 1 subscription --> 100 accounts --> 1 account * 500 tb
 
 3 categories
 ============
-1. Storage for VM's (disks & files)
-2. Unstructured data (blobs, datalake stores)
-3. Structured data (Tables, SQL db, cosmos db)
 
-Types of AZ storage
-===================
-1. Blobs --> Object storage --> Huge amount of unstructured data such as text, images, videos, data for back-up, archiving, 
-disaster recovery, binary data
-2. Files --> Highly available network file sharing over SMB (Server Message Block) --> Suitable for migration of the data
-3. Tables --> Store structured data (SQL, NOSQL), key-value pair, schema less design
-4. Queues --> Store & Retrieve Messages, each message of maximum size 64 kb --> Store millions of messages
+1. Storage for virtual machines (like disks and files)
+2. Unstructured data (videos, audio, images, messages, text) --> blobs & datalake stores
+3. Structured data --> tables, azure sql db, cosmos db
 
-Storage Replication
-====================
-Local Redundancy Storage --> 3 copies of data in 3 storage boxes within same data center
-Geo RS --> 3 copies of data in primary region, 3 copies in secondary region
-Zone RS --> 3 copies of data in multiple data centers within same region
-GZRS --> Same as ZRS, single pysical location in secondary region
-Read only GRS --> Same as GRS, Read only Access in secondary region
-RA-ZRS --> Same as ZRS, Read only Access in secondary region
+types of storage
+================
+Blob storage --> Object storage --> Huge amount of unstructured data such as text, image, videos, audio, data for back up, disaster recovery or binary data
+Files --> Highly available network file shares, uses SMB protocol (standard server message block) --> suitable for migration of data
+Tables --> Structured sql/nosql data, key & value pair --> schemaless design
+Queues --> Store and retrieve messages, each message of maximum size of 64 kb --> can store millions of messages
 
 Performance
 ===========
-Standard --> Backed by HDD (magnetic drives), Lowest cost per gb, best for applications that requires bulk storage, 
-infrequent data access
+Standard --> Backed by HDD (magnetic drives), lowest cost per gb, best for applications that requires bulk storage, data is accesses infrequently
+Premium --> Are backed SSD (Solid state drives), offers low latency and consistant performance, use with axure vm's disks, best for i/o intensive applications --> db
 
-Premium --> Backed by SSD (Solid State drives), offers low latency & consistant performance, use with Azure's VM disks,
-best for data , i/o intensive applications --> DB
 
-General Purpose V1 --> Legacy, doesn't support any performancy tiers, standard and premium, (doesn't support ZRS, GZRS)
-General Purpose V2 --> Performance tiers, all Replications, standard and premium
-Blob storage --> Unstructured data, (append blobs, block blobs)
+General purpose v1 --> Legacy, doesn't support performance tiers, 
+General purpose v2
+Blob storage
+
 
 Performance tiers
-=================
-Hot --> Optimized for storing data that is accessed frequently like VM, files, images, videos that are in regular use 
-storage cost (high), read cost (low)
 
-Cool --> Optimized for storaing data that us infrequently accessed and stored for atleast 30 days like back-up data
-storage cost (low), read cost (higher than hot)
+Hot   --> Optimized for storing data that is accesses frequently like VM, files, images, videos that are in regular use --> storage cost (highest) and read cost (low)
+Cool --> Optimied for storing data that is infrequently accessed and stored for atleast 30 days like back up data, storage cost(low) and read cost (higher than hot tier)
+Archive --> Optimized for storing data that is really accessed and stored for atleast 180 days with flexible latency requirements, storage cost (least) and read cost (highest)
 
-Cold (Archive) --> Optimized for storing data that is rarely accesses and stored for atleast 180 days with flexible latency
-storage cost (least), read cost (highest)
 
-Blob Containers & categories
+Blob containers & categories
 ============================
-Containers --> Directory structure, can store many blobs under one container
+Containers --> Directory, can store many blobs under one container
+
+Block blob --> Any text, video, audio, image files
+Page blob --> random access files upto 8 tb --> Virtual hard drive --> serve as a disk for vm
+Append blob --> Made up of multiple block blobs, optimized for append operations --> ideal for log data in vm
+
+Storage replication
+===================
+LRS --> 3 copies of data in 3 storage boxes within the same data center
+ZRS --> 3 copies of data in multiple data centres within same region
+GRS --> 3 copies of data in primary region, 3 copies in a secondary region
+RA-GRS --> Same as GRS, Read only access to secondary data centre
+GZRS --> ZRS synchronously and single physical location in secondary region
+RA-GRS --> same GZRS but read only access to the secondary region
 
 
-types of blob storages
-======================
-Block blobs --> Any text, files, videos, images etc. saved in bob storage are by default saves as block blobs
-Page blobs --> Random access files upto 8 tb --> virtual hard drive --> serves as a disk for VM's
-Append blobs --> Made up of multiple block blobs, optimized for append operations --> ideal for log data analysis in VM
+Data lake gen2 combines the best features of the below 2,
 
-1. Creating storage account
-2. Access the account from Explorer using access keys
-3. Using SAS url fro blob
-4. Generating and using SAS url for Containers
-5. Create alerts for ingress, egress in Monitor
+Data lake
+=========
+Hadoop compatible
+Optimized drivers
 
+Blob storage
+============
+Low cost, storage tiers, high availability
 
-Data lake GEN1 
-Data lake GEN2 --> Big Data
-
-ADLS2
-=====
-Combines the best features of Data lake Analytics (Hadoop compatible, Optimized drivers) 
-and Blob storage (Low cost, storage tiers, high availability)
-
-Scalable, secured & managed data lake.
-6 layers of protection for security & compliance
-
-1. Network Security --> Firewalls, Private & Service endpoints
-2. Authentication --> MFA, Service Principal, AAD
-3. Authorisation --> RBAC, ACL's, POSIX
-4. Data encryption --> SSE, CSE,  Key-vault, EKM
-5. Data Access Controls --> Lifecycle management policies, retention policies, data expiration
-6. Monitoring & auditing --> Az monitor, Log analytics
-
-Features		Blob				ADLS Gen2
-========		====				=========
-Top level Organisation	Containers			Containers
-
-Low level Organisation	Virtual directory		Directory
-
-Data containers		Blobs				Files
-
-Soft delete		Yes				No
-
-Static Website		Yes				No
-
-RBAC			Yes				No
-
-Access Control Lists	No				Yes
-
-SAS			Yes				Yes
-
-Access Keys		Yes				Yes
+                               Blob storage            ADL gen2
 
 
-ADLS2 is better than Blob storage in performance, security, scalability but costlier than blob storage
-It stores a new version for each file modification. Can be accessed using version history, can do retrieval or deletion.
+Access tiers                      yes                     yes
 
-Azure SQL Database 
-==================
-General purpose RDBMS as a services (DBaaS) based on the Microsoft SQL server db engine.
+Top level Organization         Containers             Containers
+
+Low level organisation         Virtual directory      Directory
+
+Data containers                   Blob                  File
+
+Soft delete                       yes                    no
+    
+Static website                    yes                    no
+
+RBAC                              yes                    no
+
+Access control list		   No                    yes
+
+SAS                               yes                    yes
+
+Access keys                       yes                    yes
+ 
+
+Azure sql
+=========
+PAAS
+Cloud based managed database services
 
 Benefits
 ========
-Convenient, Cost effective, Scalable, Secure, SLA (99.99% uptime)
+Convenient
+Cost
+Scale
+Security
+administration
+SLA --> 99.99% uptime
 
-Microsoft --> hardware, Data centre, Virtualization, patching, OS, networking, Security, auditing, scaling, back-up/recovery
-You --> Design, develop, migrations, capacity planning, performance tuning, automation, optimization  
+MS
+==
+Hardware, data centre, virtualization, patching, OS, networking, security, auditing, scaling, back up/restore
+
+DBA
+===
+Design, Development, Migrations, capacity planning, performance tuning, automation, optimization
+
 
 Deployment models
 =================
-Single DB -- Isolated & portable , contained, own set of resources
-Elastic pool --> Collection of single db's, shared set of resources, cost effective if the usage is unpredictable
-Managed instances --> 100% compatible with latest ms sql server, lift and shift/migration
 
-V-core based purchasing model --> choose the number of vcores, memory, speed, 
-also utilise hybrid (integrate/use your existing sql server licenses) 
+Single db --> Isolated & portable, contained, own set of resources
 
-DTU based purchasing model --> blend of compute, memory, I/O resources in 3 service tiers
+Elastic Pool --> Collection of single db's, shared set of resources, cost effective solution of the usage is unpredictable
+
+Managed instances --> 100% compatibility with latest sql server, lift n shift/migration  
+
+
+The vCore-based purchasing model lets you choose the number of vCores, the amount of memory, and the amount and speed of storage. 
+The vCore-based purchasing model also allows you to use Azure Hybrid Benefit for SQL Server to gain cost savings by leveraging your existing SQL Server licenses.
+
+
+The DTU-based purchasing model offers a blend of compute, memory, and I/O resources in three service tiers, to support light to heavy database workloads. 
+Compute sizes within each tier provide a different mix of these resources, to which you can add additional storage resources.
+
+
+Cosmos db
+=========
+Nosql db --> Columnar (Hbase, Cassandra), Document db (Mongo db, Cosmos db), Graph db(Neo4j, tiger graph), Key-value pair (Redi's, dynamo db)
+
+
+APi's --> Core sql(rdbms), mongo(document), cassandra(columnar), gremlin(graph), table(key/value pair), postgre sql
+api --> dot net, node js, python, java
+
+
+{
+"name":"arun",
+"sal":8000,
+"city":"blr"
+
+Azure Synapse
+=============
+Enterprise data warehousing and big data analytics tool
+
+SQL (synapse sql)
+Spark (processing)
+Pipelines (Integration) --> ETL, ELT (Az Data Factory) 
+
+Integration with Cosmos db, ML, Power BI
+
+Synapse workspace
+=================
+To build cloud based enterprise analytical solutions
+Attached with ADLS gen 2 file system
+
+SQL --> SQL pool --> run t-sql script on data in linked services
+
+Serverless --> built-in --> Use sql without reserving any capacity.
+Billing is based on the amount of data processed to run the query
+
+Openrow set --> Allows you to access files in Az storage and return the content as a set of rows
+
+Linked Services --> Connection strings, it defines the connection information required for workspace to connect with external resources
+
+Synapse sql
+===========
+Ability to do T-sql based analytics in synapse workspace
+2 consumption models,
+
+Dedicated sql pool --> Consumes billable resources if it's active, pause the pool to reduce the costs and this is associated with a sql db
+Serverless sql pool --> It comes by default without reserving any capacity, you're billed based on the amount of data processed to run a query
+
+Data explorer pools --> IT can be used to run near real-time analytics on large volume of logs and time series data , streaming from applications, websites, IOT devices and more.
+
+Apache spark for Synapse
+========================
+Ability to do spark based analytics in synapse workspace
+Spark session is created when you choose spark pool
+
+pool is like a runtime, it controls the resources used in the session
+
+Spark notebook
+Spark job definitions
+
+Pipelines
+=========
+
+To move data between srvices & orchestrate activities.
+Logical grouping of activities that performs a task together
+Activities defines actions within pipelines --> Copying data, running a notebook or a sql/spark program
+
+Triggers
+Integration dataset
+
+Azure Databricks
+================
+Spark based Big data analytics platform optimized for Azure
+
+Data plane
+Control plane
+
+Workspace
+=========
+Environment to access all your databricks asssets
+
+Notebooks
+Libraries
+Experimements
+
+Cluster --> Set of computational resources and configurations on which you run data engineering, data science workloads, such as production ETL pipelines, streaming analytics,
+ad-hoc analysis & ML model
+
+Billing is made on a term called databricks unit (dbu)
+
+Job clusters cannot be restarted
+
+Folders
+=======
+All static assets, notebooks, experiments
+
+Special folders
+===============
+Shared
+users
+
+Databricks data science & engineering platform--> Analytics
+Databricks ML --> ML
+
+Data components
+===============
+
+1. Tables --> Tables created using spark sql / databricks sql (stored in hive metastore), query it using sql
+2. Data --> View all data cources, tables, files(dbfs) etc. 
+3. DBFS --> Distributed file system, upload/download files/ store data for spark jobs
+4. Hive catalogue --> Metadata repository for spark tables, manages table definitions, schemas, locations (compatible with hive ql)
+5. Delta tables --> A opensource storage format for data lakes, ACID transactions, versioning, schema enforcement
+
+6. Views
+7. Datasets
+8. External data sources
+
+/FileStore/tables/b1.csv
+
+
+Azure data factory
+==================
+Cloud based ETL for scheduling and managing workflows, orchestration and transformation of data at scale
+Integration & data transformation
+
+Linked services --> Connection strings, defines information needed for the data factory to connect with external resources
+
+Datasets --> Represents the data structures within the data stores, which simply points to reference the data you want in your activities
+
+Pipeline --> Logical grouping of activities that performs a unit of work
+
+Activity --> Processing step in a pipeline
+
+Data movement
+Data transformation
+Controlflow
+
+Triggers --> Determines when a pipeline execution needs to be kicked off. 
+
+Schedule trigger --> A trigger that involves a pipeline on a clock schedule
+Tumbling window
+Events
+
+
+T-sql --> Transact sql --> Microsoft --> Azure sql database --> procedural programming
+U-sql --> Big data analytics --> Az data lake analytics, az synapse --> scalable data processing
+
+Dataflow --> Allows the developer to perform graphical data transformation
+
+Azure Functions
+===============
+
+Install node.js
+npm install -g azure-functions-core-tools
+Install python <12.0 version
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUSer
+
+
+Stream analytics Job
+====================
+2 type of inputs
+
+Data stream --> IOT hub, Event Hub, Blob storage
+Reference data --> SQL server, Blob storage, Files 
+
+Event hub --> Application data
+IOT hub --> IOT devices / sensors
+Service hub --> Message broker which enables publish / subscribe 
+
+1. Create azure IOT hub
+2. Add a device to IOT hub
+3. Pass the connection string to IOT web simulator
+4. Create stream analytics job
+5. Create Power BI dashboard / Blob storage
+
+IOT hub
+
+Event hub
+=========
+ML studio
+==========
+Designer / Pipeline
+
+Auto ML --> datasets --> register data
+
+build a new auto ml project
+
+{
+  "input_data": {
+    "columns": [
+      "CreditScore",
+      "Age",
+      "Tenure",
+      "Balance",
+      "NumOfProducts",
+      "HasCrCard",
+      "IsActiveMember",
+      "EstimatedSalary"
+    ],
+    "index": [0],
+    "data": [[619,42,2,0,1,1,1,101348.88]
+]
+  }
+}
+
+
+Python SDK
+
+Data lake storage gen 1 --> Optimized for Hadoop and Spark workloads, supports hive, pig and mapreduce
+
+Data lake storage gen 2 --> Optimised for blob storage, analytics, ai and ml, high level security, supports ADF, synapse, databricks etc.
+
+Azure Data lake Analytics --> Dstributed analytics service built on top of YARN
+Microsoft Azure doesn't provide data lake analytics service anymore.
+
+
+1. Build and deploy a ML model on the given data using Designer, Auto ML and Python SDK
+MTcars
+
+2. Upload the data into Azure blob storage, access it in Databricks, analyse and prepare reports
+
+Software Development Life Cycle
+================================
+
+1. Waterfall --> Sequential, linear
+
+Scope of change is little
+Good for simple, cost affective well defined, limited time period projects
+
+
+2. Agile
+
+Iterations, project is delivered in iterations/sprints
+Scope of change is likely
+Allows to collect the feedback often from the clients, continuous improvement
+
+Methodologies
+=============
+Scrum
+Kanban
+Lean
+
+Benefits
+========
+Improved customer satisfaction, reduced project risk
+
+Challenges
+==========
+Cultural shift, Scaling to larger teams, lack of clear requirements
+
+
+3. Devops
+
+Development + Operations
+
+Culture --> Collaboration between Development & Operations team, they work as 1 team over here.
+
+Phases --> CICD pipelines
+=========================
+
+Continous Development --> Version control --> Git, Bit bucket,sub version 
+
+Continous Testing --> Selenium/ selenium grid --> Automation testing software, Opensource web driver 
+
+Continous Integration --> Jenkins --> Opensource, 1000+ plugins
+
+Continous Deployment --> Puppet, Chef, Ansible, Saltstack
+
+Continous monitoring --> Splunk, Nagios, Grafana
+
+
+Build tools --> Maven, Gradle, Ant
+
+Tools
+=====
+Dockers --> Containers allows you to package your applications & its dependencies
+Dockerhub --> Cloud based containarisation platform
+Kubernetes --> Container management technology.
+
+Puppet --> Operational tool, Define configurations for each & every host, scaaling up/down is dynamic
+
+Nagios --> Continuous montioring
+
+Azure Devops
+=============
+Boards
+Epic
+issues bugs
+features
+user story
+artifacts --> allows teams to share packages such as Maven, npm, NuGet, 
+and more from public and private sources and integrate package sharing into your pipelines
+
+Repos --> To connect with your repository
+Pipelines --> To build pipelines
+
+Az    vs    AWS
+
+blobs        s3
+Cosmos db    Dynamo db
+Synapse      Redshift
+SQL          DBS
+ADF          Pipelines
+ML studio    Sagemaker
+PowerBi      Athena, glue
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
